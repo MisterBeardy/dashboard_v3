@@ -1,44 +1,40 @@
-# Dashboard API Testing Framework
+# Media Management Dashboard
 
-A comprehensive API testing framework for media management services (Sonarr, Radarr, Prowlarr, Readarr, Readarr_audiobooks, and SABnzbd) with OpenAPI specification support and random media selection capabilities.
+A comprehensive dashboard for managing and monitoring media services including Sonarr, Radarr, Prowlarr, Readarr, Readarr Audiobooks, and SABnzbd. This dashboard provides a unified interface for managing your media collection across multiple services.
 
 ## Features
 
-### 🚀 OpenAPI Specification Support
-- **Custom OpenAPI endpoints** for all services (Sonarr, Radarr, Prowlarr, Readarr, Readarr_audiobooks)
-- **Automatic endpoint discovery** from OpenAPI specifications
-- **Service-specific configurations** for tailored testing
-- **Mixed API approach** supporting both OpenAPI and command-based APIs
+### 🎬 Unified Media Management
+- **Sonarr**: TV series management with episode tracking and scheduling
+- **Radarr**: Movie collection management with quality profiles
+- **Prowlarr**: Indexer management for optimal search results
+- **Readarr**: Ebook and audiobook collection management
+- **Readarr Audiobooks**: Specialized audiobook management
+- **SABnzbd**: Usenet download management with queue control
 
-### 🎲 Random Media Selection
-- **Fetch first 20 items** from Sonarr, Radarr, Readarr, and Readarr_audiobooks
-- **Random selection** from fetched media items
-- **Service-specific handling** for different media types (series, movies, books, audiobooks)
-- **Integration with test runner** for realistic testing scenarios
+### 📊 Dashboard Overview
+- **Real-time Statistics**: Monitor system status across all services
+- **Queue Management**: View and manage download queues
+- **Health Monitoring**: Track service health and performance
+- **Disk Space**: Monitor storage usage across services
+- **Calendar Integration**: View upcoming releases and scheduled downloads
 
-### 🧪 Enhanced Testing Capabilities
-- **Comprehensive validation** of API responses
-- **Safety mechanisms** for destructive operations
-- **Concurrent test execution** with configurable concurrency
-- **Detailed reporting** with JSON, HTML, and console outputs
-- **Automatic analysis** of test failures with suggested fixes
-
-### 🔧 Service Support
-- **Sonarr**: TV series management with OpenAPI support
-- **Radarr**: Movie management with OpenAPI support
-- **Prowlarr**: Indexer management with OpenAPI support
-- **Readarr**: Ebook management with OpenAPI support
-- **Readarr_audiobooks**: Audiobook management with OpenAPI support
-- **SABnzbd**: Usenet download manager with command-based API support
+### 🛠️ Advanced Features
+- **OpenAPI Support**: Full OpenAPI specification integration for all services
+- **Random Media Selection**: Discover random content from your collection
+- **Comprehensive API Testing**: Built-in testing framework for all endpoints
+- **Safe Testing Guidelines**: Built-in safeguards to prevent accidental data loss
+- **Configuration Management**: Centralized configuration for all services
 
 ## Quick Start
 
 ### Prerequisites
-- Python 3.8+
 - Node.js 18+
 - pnpm package manager
+- Access to media services (Sonarr, Radarr, etc.)
 
 ### Installation
+
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -48,117 +44,14 @@ cd dashboard_v3
 pnpm install
 ```
 
-### Running Tests
+### Configuration
 
-#### Basic API Testing
+1. Copy the environment template:
 ```bash
-# Run basic API smoke tests
-python3 scripts/enhanced_api_smoke_test.py --base http://localhost:3000
+cp docs/env.local.template.md .env.local
 ```
 
-#### OpenAPI-Based Testing
-```bash
-# Run tests with OpenAPI specification support
-python3 scripts/enhanced_api_smoke_test.py --base http://localhost:3000 --use-openapi
-```
-
-#### Testing with Random Selection
-```bash
-# Run tests with random media selection feature
-python3 scripts/enhanced_api_smoke_test.py --base http://localhost:3000 --use-openapi --enable-random-selection
-```
-
-#### Advanced Configuration
-```bash
-# Run with custom settings
-python3 scripts/enhanced_api_smoke_test.py \
-  --base http://localhost:3000 \
-  --use-openapi \
-  --enable-random-selection \
-  --random-selection-limit 20 \
-  --concurrency 4 \
-  --timeout 15 \
-  --safe-mode
-```
-
-## API Endpoints
-
-### OpenAPI Specification Endpoints
-Each service provides a custom OpenAPI specification endpoint:
-
-- **Sonarr**: `GET /api/sonarr/openapi.json`
-- **Radarr**: `GET /api/radarr/openapi.json`
-- **Prowlarr**: `GET /api/prowlarr/openapi.json`
-- **Readarr**: `GET /api/readarr/openapi.json`
-- **Readarr_audiobooks**: `GET /api/readarr-audiobooks/openapi.json`
-
-### Service API Endpoints
-The framework automatically discovers and tests endpoints based on OpenAPI specifications:
-
-#### Sonarr Endpoints
-- `GET /api/sonarr/series` - Get all series
-- `GET /api/sonarr/series/{id}` - Get series by ID
-- `GET /api/sonarr/calendar` - Get calendar
-- `GET /api/sonarr/queue` - Get queue
-- `GET /api/sonarr/history` - Get history
-- `GET /api/sonarr/system/status` - Get system status
-
-#### Radarr Endpoints
-- `GET /api/radarr/movie` - Get movies
-- `GET /api/radarr/movie/{id}` - Get movie by ID
-- `GET /api/radarr/movies` - Get all movies
-- `GET /api/radarr/queue` - Get queue
-- `GET /api/radarr/history` - Get history
-- `GET /api/radarr/system/status` - Get system status
-- `GET /api/radarr/diskSpace` - Get disk space
-- `GET /api/radarr/qualityprofile` - Get quality profiles
-
-#### Prowlarr Endpoints
-- `GET /api/prowlarr/indexer` - Get indexers
-- `GET /api/prowlarr/indexer/{id}` - Get indexer by ID
-- `GET /api/prowlarr/applications` - Get applications
-- `GET /api/prowlarr/downloadclient` - Get download clients
-- `GET /api/prowlarr/command` - Get commands
-- `GET /api/prowlarr/system/status` - Get system status
-- `GET /api/prowlarr/health` - Get health status
-
-#### Readarr Endpoints
-- `GET /api/readarr/author` - Get authors
-- `GET /api/readarr/author/{id}` - Get author by ID
-- `GET /api/readarr/book` - Get books
-- `GET /api/readarr/book/{id}` - Get book by ID
-- `GET /api/readarr/queue` - Get queue
-- `GET /api/readarr/history` - Get history
-- `GET /api/readarr/wanted/missing` - Get wanted missing
-- `GET /api/readarr/system/status` - Get system status
-- `GET /api/readarr/qualityprofile` - Get quality profiles
-- `GET /api/readarr/metadataprofile` - Get metadata profiles
-
-#### Readarr Audiobooks Endpoints
-- `GET /api/readarr-audiobooks/author` - Get authors
-- `GET /api/readarr-audiobooks/author/{id}` - Get author by ID
-- `GET /api/readarr-audiobooks/book` - Get books
-- `GET /api/readarr-audiobooks/book/{id}` - Get book by ID
-- `GET /api/readarr-audiobooks/queue` - Get queue
-- `GET /api/readarr-audiobooks/history` - Get history
-- `GET /api/readarr-audiobooks/wanted/missing` - Get wanted missing
-- `GET /api/readarr-audiobooks/system/status` - Get system status
-- `GET /api/readarr-audiobooks/qualityprofile` - Get quality profiles
-- `GET /api/readarr-audiobooks/metadataprofile` - Get metadata profiles
-
-#### SABnzbd Endpoints (Command-based)
-- `GET /api/sabnzbd` - Get SABnzbd info
-- `GET /api/sabnzbd/queue` - Get queue
-- `GET /api/sabnzbd/history` - Get history
-- `GET /api/sabnzbd/categories` - Get categories
-- `GET /api/sabnzbd/config` - Get configuration
-- `GET /api/sabnzbd/server-stats` - Get server statistics
-
-## Configuration
-
-### Environment Variables
-Create a `.env.local` file based on `.env.local.template.md`:
-
+2. Configure your services in `.env.local`:
 ```bash
 # Sonarr Configuration
 NEXT_PUBLIC_SONARR_URL=http://localhost:8989
@@ -168,225 +61,204 @@ SONARR_API_KEY=your-sonarr-api-key
 NEXT_PUBLIC_RADARR_URL=http://localhost:7878
 RADARR_API_KEY=your-radarr-api-key
 
-# Prowlarr Configuration
-NEXT_PUBLIC_PROWLARR_URL=http://localhost:9696
-PROWLARR_API_KEY=your-prowlarr-api-key
-
-# Readarr Configuration
-NEXT_PUBLIC_READARR_URL=http://localhost:8787
-READARR_API_KEY=your-readarr-api-key
-
-# Readarr Audiobooks Configuration
-NEXT_PUBLIC_READARR_AUDIOBOOKS_URL=http://localhost:8788
-READARR_AUDIOBOOKS_API_KEY=your-readarr-audiobooks-api-key
-
-# SABnzbd Configuration
-NEXT_PUBLIC_SABNZBD_URL=http://localhost:8080
-SABNZBD_API_KEY=your-sabnzbd-api-key
+# Add other services as needed...
 ```
 
-### Test Configuration
-The framework supports both file-based and OpenAPI-based configuration:
-
-#### File-based Configuration
-Create a JSON configuration file:
-```json
-{
-  "sonarr": {
-    "endpoints": [
-      {
-        "name": "Get Series",
-        "path": "/api/sonarr/series",
-        "method": "GET",
-        "description": "Get all series",
-        "expected_status": 200
-      }
-    ]
-  }
-}
-```
-
-#### OpenAPI-based Configuration
-Use the `--use-openapi` flag to automatically generate configurations from OpenAPI specifications.
-
-## Command Line Options
+### Running the Dashboard
 
 ```bash
-python3 scripts/enhanced_api_smoke_test.py --help
+# Start development server
+pnpm dev
 
-usage: enhanced_api_smoke_test.py [-h] --base BASE [--timeout TIMEOUT] 
-                                  [--concurrency CONCURRENCY] [--safe-mode]
-                                  [--config-file CONFIG_FILE]
-                                  [--output-dir OUTPUT_DIR] [--use-openapi]
-                                  [--enable-random-selection]
-                                  [--random-selection-limit RANDOM_SELECTION_LIMIT]
-                                  [--dev-cmd DEV_CMD]
-                                  [--start-timeout START_TIMEOUT]
-                                  [--no-auto-start]
-
-Enhanced API Smoke Test Runner
-
-options:
-  -h, --help            show this help message and exit
-  --base BASE           Base URL of the running app (e.g., http://localhost:3000)
-  --timeout TIMEOUT     Request timeout in seconds (default: 10)
-  --concurrency CONCURRENCY
-                        Number of parallel workers (default: 8)
-  --safe-mode           Enable safe mode for destructive operations
-  --config-file CONFIG_FILE
-                        JSON file with endpoint configurations
-  --output-dir OUTPUT_DIR
-                        Output directory for reports
-  --use-openapi         Use OpenAPI specifications to discover endpoints
-  --enable-random-selection
-                        Enable random media selection feature
-  --random-selection-limit RANDOM_SELECTION_LIMIT
-                        Number of items to fetch for random selection (default: 20)
-  --dev-cmd DEV_CMD     Command to start the Next.js dev server
-  --start-timeout START_TIMEOUT
-                        Seconds to wait for the server to be ready when auto-starting
-  --no-auto-start       Disable auto-starting the dev server
+# Production build
+pnpm build
+pnpm start
 ```
 
-## Test Results
+The dashboard will be available at `http://localhost:3000`.
 
-### Example Output
-```
-Running 57 endpoint checks against http://localhost:3000...
-Safe mode: Enabled
+## Dashboard Components
 
-Testing endpoints:
---------------------------------------------------------------------------------
-✅ sonarr     GET    /api/sonarr/series                       PASS   HTTP 200 790ms
-✅ radarr     GET    /api/radarr/movie                        PASS   HTTP 200 5478ms
-✅ prowlarr   GET    /api/prowlarr/indexer                    PASS   HTTP 200 27ms
-✅ readarr    GET    /api/readarr/author                      PASS   HTTP 200 481ms
-✅ readarr_audiobooks GET    /api/readarr-audiobooks/author           PASS   HTTP 200 109ms
+### Main Dashboard
+- **Overall Statistics**: Key metrics across all services
+- **Service Status**: Real-time health monitoring
+- **Recent Activity**: Latest downloads and additions
+- **System Information**: Hardware and resource usage
 
-Random Selection Results:
-==================================================
-Sonarr: All of Us Are Dead (ID: 21)
-Radarr: 13th (ID: 5562)
-Readarr: Dean R. Koontz (ID: 2)
-Readarr_audiobooks: Hugh Howey (ID: 17)
-==================================================
+### Service-Specific Dashboards
+Each service has its own dedicated dashboard with:
+- **Service Overview**: Key metrics and status
+- **Queue Management**: Active downloads and their status
+- **History**: Past downloads and activities
+- **Settings**: Service-specific configuration options
 
-Enhanced API Smoke Test Summary
-================================================================================
-Summary: Total: 57  Passed: 40  Failed: 5  Skipped: 12
-================================================================================
-```
+### Module Details
+- **Detailed Information**: In-depth view of media items
+- **Management Actions**: Add, remove, or modify content
+- **Quality Profiles**: Configure quality settings
+- **Search and Discovery**: Find new content to add
 
-### Report Files
-The framework generates detailed reports in multiple formats:
+## API Documentation
 
-- **JSON Report**: `test_reports/json/test_report_<timestamp>.json`
-- **HTML Report**: `test_reports/html/test_report_<timestamp>.html`
-- **Analysis Report**: `analysis_reports/issue_analysis_<timestamp>.json`
+For detailed API documentation and testing information, see the `docs/endpoint/` directory:
+
+- [`docs/endpoint/README.md`](docs/endpoint/README.md) - API Testing Framework Documentation
+- [`docs/endpoint/enhanced_api_smoke_test_plan.md`](docs/endpoint/enhanced_api_smoke_test_plan.md) - Enhanced API Testing Plan
+- [`docs/endpoint/service_test_plan.md`](docs/endpoint/service_test_plan.md) - Service-Specific Test Plans
+- [`docs/endpoint/safe_testing_guidelines.md`](docs/endpoint/safe_testing_guidelines.md) - Safe Testing Guidelines
 
 ## Architecture
 
-### Core Components
+### Frontend
+- **Next.js**: React framework with server-side rendering
+- **TypeScript**: Type-safe JavaScript
+- **Tailwind CSS**: Utility-first CSS framework
+- **Shadcn/ui**: Modern React component library
 
-#### EnhancedOpenAPIFetcher
-- Fetches OpenAPI specifications from services
-- Generates endpoint configurations from specifications
-- Handles service-specific configurations
+### Backend
+- **Next.js API Routes**: Serverless API endpoints
+- **Proxy Architecture**: Secure proxy to media services
+- **OpenAPI Integration**: Dynamic API documentation
+- **CORS Configuration**: Secure cross-origin requests
 
-#### MediaRandomSelector
-- Fetches media items from services
-- Implements random selection algorithms
-- Provides formatted item information
+### Testing Framework
+- **Comprehensive Testing**: Full endpoint coverage
+- **Safety Mechanisms**: Built-in safeguards
+- **Performance Monitoring**: Response time tracking
+- **Error Handling**: Robust error management
 
-#### MediaRandomSelectorManager
-- Manages random selection across multiple services
-- Coordinates concurrent requests
-- Provides unified interface for random selection
+## Service Integration
 
-#### ResponseValidator
-- Validates API responses against expectations
-- Supports multiple validation types (status code, JSON format, response time)
-- Provides detailed validation results
+### Supported Services
+1. **Sonarr** - TV Series Management
+   - Series tracking and monitoring
+   - Episode scheduling and downloading
+   - Quality profile management
+   - Calendar integration
 
-### Class Diagram
+2. **Radarr** - Movie Collection Management
+   - Movie library management
+   - Quality profile configuration
+   - Release monitoring
+   - Disk space management
+
+3. **Prowlarr** - Indexer Management
+   - Indexer configuration and testing
+   - Application management
+   - Download client integration
+   - Health monitoring
+
+4. **Readarr** - Ebook Management
+   - Book library management
+   - Author tracking
+   - Quality profiles
+   - Metadata management
+
+5. **Readarr Audiobooks** - Audiobook Management
+   - Audiobook library management
+   - Duration tracking
+   - Quality profiles
+   - Metadata management
+
+6. **SABnzbd** - Usenet Download Manager
+   - Queue management
+   - Download history
+   - Category management
+   - Server statistics
+
+## Configuration
+
+### Environment Variables
+All configuration is handled through environment variables:
+
+```bash
+# Service URLs
+NEXT_PUBLIC_SONARR_URL=http://localhost:8989
+NEXT_PUBLIC_RADARR_URL=http://localhost:7878
+NEXT_PUBLIC_PROWLARR_URL=http://localhost:9696
+NEXT_PUBLIC_READARR_URL=http://localhost:8787
+NEXT_PUBLIC_READARR_AUDIOBOOKS_URL=http://localhost:8788
+NEXT_PUBLIC_SABNZBD_URL=http://localhost:8080
+
+# API Keys
+SONARR_API_KEY=your-api-key
+RADARR_API_KEY=your-api-key
+PROWLARR_API_KEY=your-api-key
+READARR_API_KEY=your-api-key
+READARR_AUDIOBOOKS_API_KEY=your-api-key
+SABNZBD_API_KEY=your-api-key
 ```
-EnhancedAPITester
-├── HTTPClient
-├── EnhancedOpenAPIFetcher
-│   ├── Service-specific configurations
-│   └── OpenAPI specification handling
-├── MediaRandomSelectorManager
-│   ├── MediaRandomSelector (per service)
-│   └── Random selection algorithms
-├── ResponseValidator
-│   ├── Status code validation
-│   ├── JSON format validation
-│   └── Response time validation
-└── ReportGenerator
-    ├── Console reports
-    ├── JSON reports
-    └── HTML reports
-```
+
+### Service Settings
+Each service can be configured through:
+- **Dashboard UI**: User-friendly configuration interface
+- **Environment Variables**: For deployment configuration
+- **Configuration Files**: For advanced settings
 
 ## Development
 
 ### Project Structure
 ```
 dashboard_v3/
-├── app/                          # Next.js application
-│   └── api/                      # API routes
-├── components/                   # React components
-├── docs/                         # Documentation
-├── lib/                          # Utility libraries
-├── scripts/                      # Testing scripts
-│   ├── enhanced_api_smoke_test.py
-│   └── analyze_results.py
-├── styles/                       # CSS styles
-└── test_reports/                 # Test results
+├── app/                    # Next.js application
+│   ├── api/               # API routes
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Home page
+├── components/            # React components
+│   ├── ui/               # UI components
+│   └── *.tsx             # Dashboard components
+├── docs/                  # Documentation
+│   └── endpoint/         # API documentation
+├── lib/                   # Utility libraries
+├── public/                # Static assets
+└── styles/               # CSS styles
 ```
 
 ### Adding New Services
 1. Create API routes in `app/api/{service_name}/`
-2. Add OpenAPI specification endpoint
-3. Update service configurations in `enhanced_api_smoke_test.py`
-4. Add service to `MediaRandomSelector` if applicable
+2. Add service configuration to environment variables
+3. Create dashboard components in `components/`
+4. Update the main dashboard to include the new service
+5. Add documentation to `docs/endpoint/`
 
-### Running Development Server
+### Running Tests
 ```bash
-# Start development server
-pnpm dev
+# Run API smoke tests
+python3 scripts/enhanced_api_smoke_test.py --base http://localhost:3000
 
-# Run tests in parallel
-python3 scripts/enhanced_api_smoke_test.py --base http://localhost:3000 --use-openapi --enable-random-selection
+# Run with OpenAPI support
+python3 scripts/enhanced_api_smoke_test.py --base http://localhost:3000 --use-openapi
 ```
 
 ## Troubleshooting
 
 ### Common Issues
 
-#### OpenAPI Specification Not Found
-Ensure that the OpenAPI specification endpoints are properly implemented:
-```bash
-curl http://localhost:3000/api/sonarr/openapi.json
-```
+#### Service Connection Problems
+- Verify service URLs are correct
+- Check API keys are valid
+- Ensure services are running and accessible
+- Check firewall and network settings
 
-#### Random Selection Fails
-Check that services have media items available:
-```bash
-curl http://localhost:3000/api/sonarr/series?pageSize=1
-```
+#### Dashboard Loading Issues
+- Clear browser cache
+- Check console for errors
+- Verify all dependencies are installed
+- Restart the development server
 
-#### SABnzbd HTTP 405 Errors
-SABnzbd uses a command-based API that may return HTTP 405 for GET requests to certain endpoints. This is expected behavior.
+#### API Testing Failures
+- Review safe testing guidelines
+- Check service configurations
+- Verify endpoint availability
+- Consult API documentation
 
-#### Next.js Dynamic Parameter Issues
-Ensure that dynamic parameters are properly awaited in Next.js routes:
-```typescript
-export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  // ... rest of the code
-}
-```
+### Support
+
+For support and questions:
+- Check the documentation in the `docs/` directory
+- Review API testing information in `docs/endpoint/`
+- Check the changelog for recent updates
+- Create an issue in the repository
 
 ## Contributing
 
@@ -404,10 +276,3 @@ This project is licensed under the MIT License.
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for details on changes to the project.
-
-## Support
-
-For support and questions:
-- Create an issue in the repository
-- Check the documentation in the `docs/` directory
-- Review the test reports for detailed error information
