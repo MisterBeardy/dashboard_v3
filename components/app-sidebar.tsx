@@ -65,7 +65,7 @@ return (
         <LayoutDashboard className="h-4 w-4" />
       </div>
       <div className="flex flex-col">
-        <span className="text-sm font-semibold">Dumb Dashboard v3</span>
+        <span className="text-sm font-semibold">Dumb Dashboard</span>
         <span className="text-xs text-muted-foreground">Media Management</span>
       </div>
     </div>
@@ -203,7 +203,7 @@ return (
 
   <SidebarFooter>
     <div className="px-2 py-1 text-xs text-muted-foreground">
-      v1.0.0 - Media Dashboard
+      v0.0.3 - Dumb Dashboard
     </div>
   </SidebarFooter>
 </Sidebar>

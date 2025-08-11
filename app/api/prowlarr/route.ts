@@ -5,6 +5,8 @@ import {
   withOptionalHeaders,
   appendQueryParams,
 } from '@/lib/config/service-config'
+import { withMockData, withMockSingleItem } from '@/lib/api-middleware'
+import { prowlarrMock } from '@/lib/mock-data/prowlarr'
 
 function withCors(resp: NextResponse): NextResponse {
   resp.headers.set('access-control-allow-origin', '*')
@@ -20,7 +22,7 @@ function withCors(resp: NextResponse): NextResponse {
   return resp
 }
 
-export async function GET(req: NextRequest) {
+const liveGetHandler = async (req: NextRequest) => {
   let cfg
   let primary: URL
 
@@ -73,7 +75,9 @@ export async function GET(req: NextRequest) {
   return withCors(out)
 }
 
-export async function POST(req: NextRequest) {
+export const GET = withMockData(liveGetHandler, prowlarrMock.indexer, 5)
+
+const livePostHandler = async (req: NextRequest) => {
   let cfg
   let primary: URL
 
@@ -89,9 +93,9 @@ export async function POST(req: NextRequest) {
 
   const body = await req.text()
   const headers = withOptionalHeaders(
-    { 
-      method: 'POST', 
-      cache: 'no-store', 
+    {
+      method: 'POST',
+      cache: 'no-store',
       redirect: 'follow',
       headers: {
         'Content-Type': 'application/json'
@@ -134,3 +138,5 @@ export async function POST(req: NextRequest) {
 
   return withCors(out)
 }
+
+export const POST = withMockSingleItem(livePostHandler, prowlarrMock.indexer)

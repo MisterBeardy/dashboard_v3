@@ -22,14 +22,15 @@ function withCors(resp: NextResponse): NextResponse {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   let cfg
   let primary: URL
+  const { id } = await params
 
   try {
     cfg = resolveServiceConfig('prowlarr')
-    primary = buildArrApiUrl(cfg, `/downloadclient/${params.id}`, 'v1')
+    primary = buildArrApiUrl(cfg, `/downloadclient/${id}`, 'v1')
     // forward client query params
     appendQueryParams(primary, req.nextUrl.searchParams)
     // inject apikey for local mode
@@ -78,14 +79,15 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   let cfg
   let primary: URL
+  const { id } = await params
 
   try {
     cfg = resolveServiceConfig('prowlarr')
-    primary = buildArrApiUrl(cfg, `/downloadclient/${params.id}`, 'v1')
+    primary = buildArrApiUrl(cfg, `/downloadclient/${id}`, 'v1')
     if (cfg.apiKey && !primary.searchParams.has('apikey')) {
       primary.searchParams.set('apikey', cfg.apiKey)
     }
@@ -143,14 +145,15 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   let cfg
   let primary: URL
+  const { id } = await params
 
   try {
     cfg = resolveServiceConfig('prowlarr')
-    primary = buildArrApiUrl(cfg, `/downloadclient/${params.id}`, 'v1')
+    primary = buildArrApiUrl(cfg, `/downloadclient/${id}`, 'v1')
     if (cfg.apiKey && !primary.searchParams.has('apikey')) {
       primary.searchParams.set('apikey', cfg.apiKey)
     }

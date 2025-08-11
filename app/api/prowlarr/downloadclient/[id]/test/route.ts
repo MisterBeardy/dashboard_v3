@@ -22,14 +22,15 @@ function withCors(resp: NextResponse): NextResponse {
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   let cfg
   let primary: URL
+  const { id } = await params
 
   try {
     cfg = resolveServiceConfig('prowlarr')
-    primary = buildArrApiUrl(cfg, `/downloadclient/${params.id}/test`, 'v1')
+    primary = buildArrApiUrl(cfg, `/downloadclient/${id}/test`, 'v1')
     if (cfg.apiKey && !primary.searchParams.has('apikey')) {
       primary.searchParams.set('apikey', cfg.apiKey)
     }
