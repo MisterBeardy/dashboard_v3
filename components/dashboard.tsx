@@ -11,11 +11,15 @@ import { ModuleDetail } from "@/components/module-detail"
 import { useState } from "react"
 import { SABnzbdDashboard } from "@/components/sabnzbd-dashboard"
 import { SonarrDashboard } from "@/components/sonarr-dashboard"
+import { RadarrDashboard } from "@/components/radarr-dashboard"
+import { ProwlarrDashboard } from "@/components/prowlarr-dashboard"
+import { ReadarrDashboard } from "@/components/readarr-dashboard"
+import { ReadarrAudiobooksDashboard } from "@/components/readarr-audiobooks-dashboard"
 import { DashboardSettings, type DashboardSettingsState } from "@/components/dashboard-settings"
 import { OverallStatistics } from "@/components/overall-statistics" // New import
 import { hexToHsl } from "@/lib/utils" // Import hexToHsl
 
-export type ViewType = 'dashboard' | 'sabnzbd' | 'sonarr' | 'logs' | 'ui-settings' | 'module-settings' | 'dashboard-settings' | 'overview' // New ViewType
+export type ViewType = 'dashboard' | 'sabnzbd' | 'sonarr' | 'radarr' | 'prowlarr' | 'readarr' | 'readarr-audiobooks' | 'logs' | 'ui-settings' | 'module-settings' | 'dashboard-settings' | 'overview' // New ViewType
 
 export function Dashboard() {
 const [currentView, setCurrentView] = useState<ViewType>('dashboard')
@@ -23,6 +27,10 @@ const [primaryHexColor, setPrimaryHexColor] = useState('#3b82f6') // Changed to 
 const [moduleDisplayModes, setModuleDisplayModes] = useState<Record<string, 'table' | 'poster'>>({
   sabnzbd: 'table',
   sonarr: 'table',
+  radarr: 'table',
+  prowlarr: 'table',
+  readarr: 'table',
+  'readarr-audiobooks': 'table',
 })
 const [selectedSettingModuleId, setSelectedSettingModuleId] = useState<string | null>(null)
 const [dashboardSettings, setDashboardSettings] = useState<DashboardSettingsState>({
@@ -34,6 +42,10 @@ const [dashboardSettings, setDashboardSettings] = useState<DashboardSettingsStat
 const [enabledModules, setEnabledModules] = useState<Record<string, boolean>>({ // New state for global module enable/disable
   sabnzbd: true,
   sonarr: true,
+  radarr: true,
+  prowlarr: true,
+  readarr: true,
+  'readarr-audiobooks': true,
 })
 
 const renderContent = () => {
@@ -51,6 +63,14 @@ const renderContent = () => {
       return <SABnzbdDashboard displayMode={moduleDisplayModes.sabnzbd} />
     case 'sonarr':
       return <SonarrDashboard displayMode={moduleDisplayModes.sonarr} />
+    case 'radarr':
+      return <RadarrDashboard displayMode={moduleDisplayModes.radarr} />
+    case 'prowlarr':
+      return <ProwlarrDashboard displayMode={moduleDisplayModes.prowlarr} />
+    case 'readarr':
+      return <ReadarrDashboard displayMode={moduleDisplayModes.readarr} />
+    case 'readarr-audiobooks':
+      return <ReadarrAudiobooksDashboard displayMode={moduleDisplayModes['readarr-audiobooks']} />
     case 'logs':
       return <LogViewer />
     case 'ui-settings':

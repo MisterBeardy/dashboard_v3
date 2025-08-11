@@ -1,0 +1,788 @@
+{
+  "sabnzbd": {
+    "endpoints": [
+      {
+        "name": "Generic Proxy",
+        "path": "/api/sabnzbd",
+        "method": "GET",
+        "description": "Generic proxy endpoint for SABnzbd API",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Queue",
+        "path": "/api/sabnzbd/queue",
+        "method": "GET",
+        "description": "Get download queue information",
+        "expected_status": 200
+      },
+      {
+        "name": "Get History",
+        "path": "/api/sabnzbd/history",
+        "method": "GET",
+        "description": "Get download history",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Categories",
+        "path": "/api/sabnzbd/categories",
+        "method": "GET",
+        "description": "Get available categories",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Config",
+        "path": "/api/sabnzbd/config",
+        "method": "GET",
+        "description": "Get SABnzbd configuration",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Server Stats",
+        "path": "/api/sabnzbd/server-stats",
+        "method": "GET",
+        "description": "Get server statistics",
+        "expected_status": 200
+      },
+      {
+        "name": "Pause Queue",
+        "path": "/api/sabnzbd/queue/pause",
+        "method": "POST",
+        "description": "Pause entire download queue",
+        "destructive": false,
+        "safe_mode": "allow",
+        "expected_status": 200
+      },
+      {
+        "name": "Resume Queue",
+        "path": "/api/sabnzbd/queue/resume",
+        "method": "POST",
+        "description": "Resume entire download queue",
+        "destructive": false,
+        "safe_mode": "allow",
+        "expected_status": 200
+      },
+      {
+        "name": "Delete Queue Item",
+        "path": "/api/sabnzbd/queue/{nzoId}",
+        "method": "DELETE",
+        "description": "Delete specific item from queue",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"nzoId": "test_nzo_123"},
+        "expected_status": 200
+      },
+      {
+        "name": "Pause Queue Item",
+        "path": "/api/sabnzbd/queue/{nzoId}/pause",
+        "method": "POST",
+        "description": "Pause specific queue item",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"nzoId": "test_nzo_123"},
+        "expected_status": 200
+      },
+      {
+        "name": "Resume Queue Item",
+        "path": "/api/sabnzbd/queue/{nzoId}/resume",
+        "method": "POST",
+        "description": "Resume specific queue item",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"nzoId": "test_nzo_123"},
+        "expected_status": 200
+      },
+      {
+        "name": "Set Priority",
+        "path": "/api/sabnzbd/queue/{nzoId}/priority",
+        "method": "POST",
+        "description": "Set priority for queue item",
+        "path_params": {"nzoId": "test_nzo_123"},
+        "body": {"priority": "High"},
+        "expected_status": 200
+      },
+      {
+        "name": "Set Category",
+        "path": "/api/sabnzbd/queue/{nzoId}/category",
+        "method": "POST",
+        "description": "Set category for queue item",
+        "path_params": {"nzoId": "test_nzo_123"},
+        "body": {"category": "test"},
+        "expected_status": 200
+      },
+      {
+        "name": "Add NZB File",
+        "path": "/api/sabnzbd/addfile",
+        "method": "POST",
+        "description": "Add NZB file",
+        "destructive": true,
+        "safe_mode": "mock",
+        "expected_status": 200
+      },
+      {
+        "name": "Add NZB URL",
+        "path": "/api/sabnzbd/addurl",
+        "method": "POST",
+        "description": "Add NZB by URL",
+        "destructive": true,
+        "safe_mode": "mock",
+        "body": {"name": "test", "url": "http://example.com/test.nzb"},
+        "expected_status": 200
+      }
+    ]
+  },
+  "sonarr": {
+    "endpoints": [
+      {
+        "name": "Get Series",
+        "path": "/api/sonarr/series",
+        "method": "GET",
+        "description": "Get all series",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Series by ID",
+        "path": "/api/sonarr/series/{id}",
+        "method": "GET",
+        "description": "Get specific series",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Calendar",
+        "path": "/api/sonarr/calendar",
+        "method": "GET",
+        "description": "Get calendar information",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Calendar - 7 Days",
+        "path": "/api/sonarr/calendar",
+        "method": "GET",
+        "description": "Get calendar for next 7 days",
+        "query_params": {"start": "2023-08-09", "end": "2023-08-16"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Calendar - 30 Days",
+        "path": "/api/sonarr/calendar",
+        "method": "GET",
+        "description": "Get calendar for next 30 days",
+        "query_params": {"start": "2023-08-09", "end": "2023-09-08"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Queue",
+        "path": "/api/sonarr/queue",
+        "method": "GET",
+        "description": "Get download queue",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Missing Episodes",
+        "path": "/api/sonarr/wanted/missing",
+        "method": "GET",
+        "description": "Get wanted/missing episodes",
+        "expected_status": 200
+      },
+      {
+        "name": "Get History",
+        "path": "/api/sonarr/history",
+        "method": "GET",
+        "description": "Get download history",
+        "expected_status": 200
+      },
+      {
+        "name": "Get System Status",
+        "path": "/api/sonarr/system/status",
+        "method": "GET",
+        "description": "Get system status",
+        "expected_status": 200
+      },
+      {
+        "name": "Get System Tasks",
+        "path": "/api/sonarr/system/task",
+        "method": "GET",
+        "description": "Get system tasks",
+        "expected_status": 200
+      },
+      {
+        "name": "Get System Health",
+        "path": "/api/sonarr/health",
+        "method": "GET",
+        "description": "Get system health",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Disk Space",
+        "path": "/api/sonarr/diskspace",
+        "method": "GET",
+        "description": "Get disk space information",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Update Info",
+        "path": "/api/sonarr/update",
+        "method": "GET",
+        "description": "Get update information",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Language Profiles",
+        "path": "/api/sonarr/languageprofile",
+        "method": "GET",
+        "description": "Get language profiles",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Quality Profiles",
+        "path": "/api/sonarr/qualityprofile",
+        "method": "GET",
+        "description": "Get quality profiles",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Root Folders",
+        "path": "/api/sonarr/rootfolder",
+        "method": "GET",
+        "description": "Get root folders",
+        "expected_status": 200
+      },
+      {
+        "name": "Execute Command",
+        "path": "/api/sonarr/command",
+        "method": "POST",
+        "description": "Execute system command",
+        "destructive": true,
+        "safe_mode": "mock",
+        "body": {"name": "MissingEpisodeSearch"},
+        "expected_status": 200
+      },
+      {
+        "name": "Update Series",
+        "path": "/api/sonarr/series/{id}",
+        "method": "PUT",
+        "description": "Update series information",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "99999"},
+        "body": {"monitored": true},
+        "expected_status": 200
+      },
+      {
+        "name": "Update Episode",
+        "path": "/api/sonarr/episode/{id}",
+        "method": "PUT",
+        "description": "Update episode information",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "99999"},
+        "body": {"monitored": true},
+        "expected_status": 200
+      },
+      {
+        "name": "Delete Queue Item",
+        "path": "/api/sonarr/queue/{id}",
+        "method": "DELETE",
+        "description": "Delete item from queue",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "test_queue_123"},
+        "expected_status": 200
+      },
+      {
+        "name": "Lookup Series",
+        "path": "/api/sonarr/series/lookup",
+        "method": "GET",
+        "description": "Lookup series by term",
+        "query_params": {"term": "test"},
+        "expected_status": 200
+      }
+    ]
+  },
+  "radarr": {
+    "endpoints": [
+      {
+        "name": "Generic Proxy",
+        "path": "/api/radarr",
+        "method": "GET",
+        "description": "Generic proxy endpoint for Radarr API",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Movies",
+        "path": "/api/radarr/movie",
+        "method": "GET",
+        "description": "Get movies list",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Movie by ID",
+        "path": "/api/radarr/movie/{id}",
+        "method": "GET",
+        "description": "Get specific movie",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Movie Lookup",
+        "path": "/api/radarr/movie/lookup",
+        "method": "GET",
+        "description": "Lookup movie by term",
+        "query_params": {"term": "test"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Queue",
+        "path": "/api/radarr/queue",
+        "method": "GET",
+        "description": "Get download queue",
+        "expected_status": 200
+      },
+      {
+        "name": "Get History",
+        "path": "/api/radarr/history",
+        "method": "GET",
+        "description": "Get download history",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Quality Profiles",
+        "path": "/api/radarr/qualityprofile",
+        "method": "GET",
+        "description": "Get quality profiles",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Root Folders",
+        "path": "/api/radarr/rootfolder",
+        "method": "GET",
+        "description": "Get root folders",
+        "expected_status": 200
+      },
+      {
+        "name": "Get System Status",
+        "path": "/api/radarr/system/status",
+        "method": "GET",
+        "description": "Get system status",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Health",
+        "path": "/api/radarr/health",
+        "method": "GET",
+        "description": "Get system health",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Wanted Missing",
+        "path": "/api/radarr/wanted/missing",
+        "method": "GET",
+        "description": "Get wanted/missing movies",
+        "expected_status": 200
+      },
+      {
+        "name": "Execute Command",
+        "path": "/api/radarr/command",
+        "method": "POST",
+        "description": "Execute system command",
+        "destructive": true,
+        "safe_mode": "mock",
+        "body": {"name": "MoviesSearch"},
+        "expected_status": 200
+      },
+      {
+        "name": "Delete Queue Item",
+        "path": "/api/radarr/queue/{id}",
+        "method": "DELETE",
+        "description": "Delete item from queue",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "test_queue_123"},
+        "expected_status": 200
+      },
+      {
+        "name": "Update Movie",
+        "path": "/api/radarr/movie/{id}",
+        "method": "PUT",
+        "description": "Update movie information",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "99999"},
+        "body": {"monitored": true},
+        "expected_status": 200
+      }
+    ]
+  },
+  "prowlarr": {
+    "endpoints": [
+      {
+        "name": "Generic Proxy",
+        "path": "/api/prowlarr",
+        "method": "GET",
+        "description": "Generic proxy endpoint for Prowlarr API",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Indexers",
+        "path": "/api/prowlarr/indexer",
+        "method": "GET",
+        "description": "Get indexers list",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Indexer by ID",
+        "path": "/api/prowlarr/indexer/{id}",
+        "method": "GET",
+        "description": "Get specific indexer",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Test Indexer",
+        "path": "/api/prowlarr/indexer/{id}/test",
+        "method": "POST",
+        "description": "Test indexer connection",
+        "destructive": false,
+        "safe_mode": "allow",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Applications",
+        "path": "/api/prowlarr/application",
+        "method": "GET",
+        "description": "Get applications",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Application by ID",
+        "path": "/api/prowlarr/application/{id}",
+        "method": "GET",
+        "description": "Get specific application",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get System Status",
+        "path": "/api/prowlarr/system/status",
+        "method": "GET",
+        "description": "Get system status",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Health",
+        "path": "/api/prowlarr/health",
+        "method": "GET",
+        "description": "Get system health",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Download Clients",
+        "path": "/api/prowlarr/downloadclient",
+        "method": "GET",
+        "description": "Get download clients",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Download Client by ID",
+        "path": "/api/prowlarr/downloadclient/{id}",
+        "method": "GET",
+        "description": "Get specific download client",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Test Download Client",
+        "path": "/api/prowlarr/downloadclient/{id}/test",
+        "method": "POST",
+        "description": "Test download client connection",
+        "destructive": false,
+        "safe_mode": "allow",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Execute Command",
+        "path": "/api/prowlarr/command",
+        "method": "POST",
+        "description": "Execute system command",
+        "destructive": true,
+        "safe_mode": "mock",
+        "body": {"name": "ApplicationCheckUpdate"},
+        "expected_status": 200
+      }
+    ]
+  },
+  "readarr": {
+    "endpoints": [
+      {
+        "name": "Generic Proxy",
+        "path": "/api/readarr",
+        "method": "GET",
+        "description": "Generic proxy endpoint for Readarr API",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Books",
+        "path": "/api/readarr/book",
+        "method": "GET",
+        "description": "Get books list",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Book by ID",
+        "path": "/api/readarr/book/{id}",
+        "method": "GET",
+        "description": "Get specific book",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Book Lookup",
+        "path": "/api/readarr/book/lookup",
+        "method": "GET",
+        "description": "Lookup book by term",
+        "query_params": {"term": "test"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Authors",
+        "path": "/api/readarr/author",
+        "method": "GET",
+        "description": "Get authors list",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Author by ID",
+        "path": "/api/readarr/author/{id}",
+        "method": "GET",
+        "description": "Get specific author",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Queue",
+        "path": "/api/readarr/queue",
+        "method": "GET",
+        "description": "Get download queue",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Wanted Books",
+        "path": "/api/readarr/wanted/missing",
+        "method": "GET",
+        "description": "Get wanted/missing books",
+        "expected_status": 200
+      },
+      {
+        "name": "Get History",
+        "path": "/api/readarr/history",
+        "method": "GET",
+        "description": "Get download history",
+        "expected_status": 200
+      },
+      {
+        "name": "Get System Status",
+        "path": "/api/readarr/system/status",
+        "method": "GET",
+        "description": "Get system status",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Health",
+        "path": "/api/readarr/health",
+        "method": "GET",
+        "description": "Get system health",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Quality Profiles",
+        "path": "/api/readarr/qualityprofile",
+        "method": "GET",
+        "description": "Get quality profiles",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Root Folders",
+        "path": "/api/readarr/rootfolder",
+        "method": "GET",
+        "description": "Get root folders",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Metadata Profiles",
+        "path": "/api/readarr/metadataprofile",
+        "method": "GET",
+        "description": "Get metadata profiles",
+        "expected_status": 200
+      },
+      {
+        "name": "Execute Command",
+        "path": "/api/readarr/command",
+        "method": "POST",
+        "description": "Execute system command",
+        "destructive": true,
+        "safe_mode": "mock",
+        "body": {"name": "AuthorSearch"},
+        "expected_status": 200
+      },
+      {
+        "name": "Delete Queue Item",
+        "path": "/api/readarr/queue/{id}",
+        "method": "DELETE",
+        "description": "Delete item from queue",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "test_queue_123"},
+        "expected_status": 200
+      },
+      {
+        "name": "Update Book",
+        "path": "/api/readarr/book/{id}",
+        "method": "PUT",
+        "description": "Update book information",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "99999"},
+        "body": {"monitored": true},
+        "expected_status": 200
+      }
+    ]
+  },
+  "readarr-audiobooks": {
+    "endpoints": [
+      {
+        "name": "Generic Proxy",
+        "path": "/api/readarr-audiobooks",
+        "method": "GET",
+        "description": "Generic proxy endpoint for Readarr Audiobooks API",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Audiobooks",
+        "path": "/api/readarr-audiobooks/book",
+        "method": "GET",
+        "description": "Get audiobooks list",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Audiobook by ID",
+        "path": "/api/readarr-audiobooks/book/{id}",
+        "method": "GET",
+        "description": "Get specific audiobook",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Audiobook Lookup",
+        "path": "/api/readarr-audiobooks/book/lookup",
+        "method": "GET",
+        "description": "Lookup audiobook by term",
+        "query_params": {"term": "test"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Authors",
+        "path": "/api/readarr-audiobooks/author",
+        "method": "GET",
+        "description": "Get authors list",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Author by ID",
+        "path": "/api/readarr-audiobooks/author/{id}",
+        "method": "GET",
+        "description": "Get specific author",
+        "path_params": {"id": "1"},
+        "expected_status": 200
+      },
+      {
+        "name": "Get Queue",
+        "path": "/api/readarr-audiobooks/queue",
+        "method": "GET",
+        "description": "Get download queue",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Wanted Audiobooks",
+        "path": "/api/readarr-audiobooks/wanted/missing",
+        "method": "GET",
+        "description": "Get wanted/missing audiobooks",
+        "expected_status": 200
+      },
+      {
+        "name": "Get History",
+        "path": "/api/readarr-audiobooks/history",
+        "method": "GET",
+        "description": "Get download history",
+        "expected_status": 200
+      },
+      {
+        "name": "Get System Status",
+        "path": "/api/readarr-audiobooks/system/status",
+        "method": "GET",
+        "description": "Get system status",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Health",
+        "path": "/api/readarr-audiobooks/health",
+        "method": "GET",
+        "description": "Get system health",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Quality Profiles",
+        "path": "/api/readarr-audiobooks/qualityprofile",
+        "method": "GET",
+        "description": "Get quality profiles",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Root Folders",
+        "path": "/api/readarr-audiobooks/rootfolder",
+        "method": "GET",
+        "description": "Get root folders",
+        "expected_status": 200
+      },
+      {
+        "name": "Get Metadata Profiles",
+        "path": "/api/readarr-audiobooks/metadataprofile",
+        "method": "GET",
+        "description": "Get metadata profiles",
+        "expected_status": 200
+      },
+      {
+        "name": "Execute Command",
+        "path": "/api/readarr-audiobooks/command",
+        "method": "POST",
+        "description": "Execute system command",
+        "destructive": true,
+        "safe_mode": "mock",
+        "body": {"name": "AuthorSearch"},
+        "expected_status": 200
+      },
+      {
+        "name": "Delete Queue Item",
+        "path": "/api/readarr-audiobooks/queue/{id}",
+        "method": "DELETE",
+        "description": "Delete item from queue",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "test_queue_123"},
+        "expected_status": 200
+      },
+      {
+        "name": "Update Audiobook",
+        "path": "/api/readarr-audiobooks/book/{id}",
+        "method": "PUT",
+        "description": "Update audiobook information",
+        "destructive": true,
+        "safe_mode": "mock",
+        "path_params": {"id": "99999"},
+        "body": {"monitored": true},
+        "expected_status": 200
+      }
+    ]
+  }
+}

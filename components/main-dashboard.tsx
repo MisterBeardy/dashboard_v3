@@ -3,10 +3,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Activity, CheckCircle, XCircle, Clock, Download, HardDrive, Tv, Settings } from 'lucide-react'
+import { Activity, CheckCircle, XCircle, Clock, Download, HardDrive, Tv, Settings, Film, Radio, Book, Headphones } from 'lucide-react'
 import { Button } from "@/components/ui/button" // Import Button
 import { type DashboardSettingsState } from "./dashboard-settings"
 import { ViewType } from "./dashboard"
+import { useRadarr } from "@/hooks/use-radarr"
+import { useProwlarr } from "@/hooks/use-prowlarr"
+import { useReadarr } from "@/hooks/use-readarr"
+import { useReadarrAudiobooks } from "@/hooks/use-readarr-audiobooks"
 import { useSABnzbd } from "@/hooks/use-sabnzbd"
 import { useMemo } from "react"
 
@@ -41,6 +45,22 @@ export function MainDashboard({ settings, setCurrentView, setSelectedSettingModu
     ? useSABnzbd('/api/sab', '')
     : ({ queue: null, loading: false, error: null } as any)
 
+  // Radarr enablement
+  const radarrEnabled = !!enabledModules.radarr
+  const radarrHook = radarrEnabled ? useRadarr() : null
+
+  // Prowlarr enablement
+  const prowlarrEnabled = !!enabledModules.prowlarr
+  const prowlarrHook = prowlarrEnabled ? useProwlarr() : null
+
+  // Readarr Ebook enablement
+  const readarrEnabled = !!enabledModules.readarr
+  const readarrHook = readarrEnabled ? useReadarr() : null
+
+  // Readarr Audiobooks enablement
+  const readarrAudiobooksEnabled = !!enabledModules['readarr-audiobooks']
+  const readarrAudiobooksHook = readarrAudiobooksEnabled ? useReadarrAudiobooks() : null
+
   const computedModuleStatus = useMemo(() => {
     const out: Array<{ name: string; id: string; icon: any; status: string; version: string; activity: string; stats: any }> = []
     if (enabledModules.sabnzbd) {
@@ -74,8 +94,72 @@ export function MainDashboard({ settings, setCurrentView, setSelectedSettingModu
         stats: { total: '-' },
       })
     }
+    if (enabledModules.radarr) {
+      const movies = radarrHook?.movies || []
+      out.push({
+        name: 'Radarr',
+        id: 'radarr',
+        icon: Film,
+        status: 'online',
+        version: radarrHook?.systemStatus?.version || '',
+        activity: movies.length > 0 ? `${movies.length} movies` : 'No movies',
+        stats: {
+          total: movies.length,
+          wanted: radarrHook?.wantedMissing?.totalRecords || 0,
+          monitored: movies.filter((m: any) => m.monitored).length
+        },
+      })
+    }
+    if (enabledModules.prowlarr) {
+      const indexers = prowlarrHook?.indexers || []
+      out.push({
+        name: 'Prowlarr',
+        id: 'prowlarr',
+        icon: Radio,
+        status: 'online',
+        version: prowlarrHook?.systemStatus?.version || '',
+        activity: indexers.length > 0 ? `${indexers.filter((i: any) => i.enable).length}/${indexers.length} indexers` : 'No indexers',
+        stats: {
+          total: indexers.length,
+          enabled: indexers.filter((i: any) => i.enable).length,
+          downloadClients: prowlarrHook?.downloadClients?.length || 0
+        },
+      })
+    }
+    if (enabledModules.readarr) {
+      const books = readarrHook?.books || []
+      out.push({
+        name: 'Readarr Ebook',
+        id: 'readarr',
+        icon: Book,
+        status: 'online',
+        version: readarrHook?.systemStatus?.version || '',
+        activity: books.length > 0 ? `${books.length} books` : 'No books',
+        stats: {
+          total: books.length,
+          authors: readarrHook?.authors?.length || 0,
+          monitored: books.filter((b: any) => b.monitored).length
+        },
+      })
+    }
+    if (enabledModules['readarr-audiobooks']) {
+      const books = readarrAudiobooksHook?.books || []
+      out.push({
+        name: 'Readarr Audiobooks',
+        id: 'readarr-audiobooks',
+        icon: Headphones,
+        status: 'online',
+        version: readarrAudiobooksHook?.systemStatus?.version || '',
+        activity: books.length > 0 ? `${books.length} audiobooks` : 'No audiobooks',
+        stats: {
+          total: books.length,
+          authors: readarrAudiobooksHook?.authors?.length || 0,
+          monitored: books.filter((b: any) => b.monitored).length
+        },
+      })
+    }
     return out
-  }, [enabledModules.sabnzbd, enabledModules.sonarr, queue, error])
+  }, [enabledModules.sabnzbd, enabledModules.sonarr, enabledModules.radarr, enabledModules.prowlarr, enabledModules.readarr, enabledModules['readarr-audiobooks'], queue, error, radarrHook, prowlarrHook, readarrHook, readarrAudiobooksHook])
 
   const compactQueue = useMemo(() => {
     const slots = (queue?.slots ?? []) as any[]
@@ -156,11 +240,27 @@ export function MainDashboard({ settings, setCurrentView, setSelectedSettingModu
                <div className="text-xl font-bold">
                  {module.id === 'sabnzbd'
                    ? `${module.stats.queueCount ?? 0} in queue`
+                   : module.id === 'radarr'
+                   ? `${module.stats.total} movies`
+                   : module.id === 'prowlarr'
+                   ? `${module.stats.enabled}/${module.stats.total} indexers`
+                   : module.id === 'readarr'
+                   ? `${module.stats.total} books`
+                   : module.id === 'readarr-audiobooks'
+                   ? `${module.stats.total} audiobooks`
                    : module.stats.total}
                </div>
                <p className="text-xs text-muted-foreground">
                  {module.id === 'sabnzbd'
                    ? `Remaining ${module.stats.remaining} / ${module.stats.total} • Free ${module.stats.diskLeft}`
+                   : module.id === 'radarr'
+                   ? `${module.stats.wanted} wanted • ${module.stats.monitored} monitored`
+                   : module.id === 'prowlarr'
+                   ? `${module.stats.downloadClients} download clients`
+                   : module.id === 'readarr'
+                   ? `${module.stats.authors} authors • ${module.stats.monitored} monitored`
+                   : module.id === 'readarr-audiobooks'
+                   ? `${module.stats.authors} authors • ${module.stats.monitored} monitored`
                    : ''}
                </p>
              </CardContent>

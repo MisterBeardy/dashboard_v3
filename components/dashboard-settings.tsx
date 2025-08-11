@@ -24,7 +24,10 @@ interface DashboardSettingsProps {
 const allModules = [
 { id: 'sabnzbd', name: 'SABnzbd' },
 { id: 'sonarr', name: 'Sonarr' },
-// Add other modules here as they are introduced (e.g., Radarr)
+{ id: 'radarr', name: 'Radarr' },
+{ id: 'prowlarr', name: 'Prowlarr' },
+{ id: 'readarr', name: 'Readarr Ebook' },
+{ id: 'readarr-audiobooks', name: 'Readarr Audiobooks' },
 ]
 
 export function DashboardSettings({ settings, setSettings, enabledModules, setEnabledModules }: DashboardSettingsProps) {
@@ -154,6 +157,39 @@ return (
           onCheckedChange={(checked) => handleSettingChange('showRecentActivity', checked)}
         />
       </div>
+    </CardContent>
+  </Card>
+
+  {/* Module Enable/Disable */}
+  <Card>
+    <CardHeader className="pb-1 pt-3 px-3">
+      <CardTitle className="flex items-center gap-2">
+        <LayoutDashboard className="h-5 w-5" />
+        Module Enable/Disable
+      </CardTitle>
+      <CardDescription>
+        Toggle which modules appear in your dashboard
+      </CardDescription>
+    </CardHeader>
+    <CardContent className="space-y-3 pb-3 px-3">
+      {allModules.map((module) => (
+        <div key={module.id} className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <Label className="text-sm">{module.name}</Label>
+            <div className="text-xs text-muted-foreground">
+              Enable or disable the {module.name} module
+            </div>
+          </div>
+          <Switch
+            checked={enabledModules[module.id] || false}
+            onCheckedChange={(checked) => {
+              const newEnabledModules = { ...enabledModules, [module.id]: checked };
+              setEnabledModules(newEnabledModules);
+              console.log(`Module ${module.id} ${checked ? 'enabled' : 'disabled'}`);
+            }}
+          />
+        </div>
+      ))}
     </CardContent>
   </Card>
 

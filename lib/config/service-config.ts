@@ -61,31 +61,31 @@ export function resolveServiceConfig(service: ServiceName): ServiceConfig {
   const map: Record<ServiceName, { base: string; key?: string; urlBase?: string }> = {
     sabnzbd: {
       base: `${prefix}_SABNZBD_BASE_URL`,
-      key: !isRemote ? 'LOCAL_SABNZBD_API_KEY' : undefined,
+      key: `${prefix}_SABNZBD_API_KEY`,
     },
     sonarr: {
       base: `${prefix}_SONARR_BASE_URL`,
-      key: !isRemote ? 'LOCAL_SONARR_API_KEY' : undefined,
+      key: `${prefix}_SONARR_API_KEY`,
       urlBase: `${prefix}_SONARR_URL_BASE`,
     },
     radarr: {
       base: `${prefix}_RADARR_BASE_URL`,
-      key: !isRemote ? 'LOCAL_RADARR_API_KEY' : undefined,
+      key: `${prefix}_RADARR_API_KEY`,
       urlBase: `${prefix}_RADARR_URL_BASE`,
     },
     prowlarr: {
       base: `${prefix}_PROWLARR_BASE_URL`,
-      key: !isRemote ? 'LOCAL_PROWLARR_API_KEY' : undefined,
+      key: `${prefix}_PROWLARR_API_KEY`,
       urlBase: `${prefix}_PROWLARR_URL_BASE`,
     },
     readarr: {
       base: `${prefix}_READARR_BASE_URL`,
-      key: !isRemote ? 'LOCAL_READARR_API_KEY' : undefined,
+      key: `${prefix}_READARR_API_KEY`,
       urlBase: `${prefix}_READARR_URL_BASE`,
     },
     readarr_audiobooks: {
       base: `${prefix}_READARR_AUDIOBOOKS_BASE_URL`,
-      key: !isRemote ? 'LOCAL_READARR_AUDIOBOOKS_API_KEY' : undefined,
+      key: `${prefix}_READARR_AUDIOBOOKS_API_KEY`,
       urlBase: `${prefix}_READARR_AUDIOBOOKS_URL_BASE`,
     },
   };

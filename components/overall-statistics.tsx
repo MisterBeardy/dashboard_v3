@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { BarChart3, Download, Tv, Settings } from 'lucide-react'
+import { BarChart3, Download, Tv, Settings, Film, Radio, BookOpen, Headphones } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { type ViewType } from "./dashboard"
 
@@ -33,6 +33,54 @@ const overallStatsData = [
       { label: 'Missing Episodes', value: 67, isDestructive: true },
       { label: 'Monitored Series', value: 38 },
       { label: 'Disk Usage', value: '2.4 TB / 4 TB' },
+    ]
+  },
+  {
+    id: 'radarr',
+    name: 'Radarr',
+    icon: Film,
+    metrics: [
+      { label: 'Total Movies', value: 238 },
+      { label: 'Missing Movies', value: 42, isDestructive: true },
+      { label: 'Monitored Movies', value: 196 },
+      { label: 'Total Size', value: '1.8 TB' },
+      { label: 'Quality Profiles', value: 3 },
+    ]
+  },
+  {
+    id: 'prowlarr',
+    name: 'Prowlarr',
+    icon: Radio,
+    metrics: [
+      { label: 'Total Indexers', value: 24 },
+      { label: 'Enabled Indexers', value: 21 },
+      { label: 'Disabled Indexers', value: 3, isDestructive: true },
+      { label: 'Total Searches', value: 12456 },
+      { label: 'Search Success Rate', value: '92.3%' },
+    ]
+  },
+  {
+    id: 'readarr',
+    name: 'Readarr Ebook',
+    icon: BookOpen,
+    metrics: [
+      { label: 'Total Books', value: 1247 },
+      { label: 'Missing Books', value: 89, isDestructive: true },
+      { label: 'Monitored Books', value: 1158 },
+      { label: 'Total Authors', value: 342 },
+      { label: 'Total Size', value: '3.2 GB' },
+    ]
+  },
+  {
+    id: 'readarr-audiobooks',
+    name: 'Readarr Audiobooks',
+    icon: Headphones,
+    metrics: [
+      { label: 'Total Audiobooks', value: 312 },
+      { label: 'Missing Audiobooks', value: 24, isDestructive: true },
+      { label: 'Monitored Audiobooks', value: 288 },
+      { label: 'Total Authors', value: 187 },
+      { label: 'Total Size', value: '28.4 GB' },
     ]
   },
 ]

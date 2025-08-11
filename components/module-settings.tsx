@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Save, Tv, Download, Settings } from 'lucide-react'
+import { Save, Tv, Download, Settings, Film, Radio, BookOpen, Headphones } from 'lucide-react'
 import { useState, useEffect } from "react"
 
 
@@ -12,17 +12,17 @@ type DisplayMode = 'table' | 'poster';
 interface ModuleConfig {
   id: string;
   name: string;
-  icon: typeof Download | typeof Tv;
+  icon: typeof Download | typeof Tv | typeof Film | typeof Radio | typeof BookOpen | typeof Headphones;
   displayMode: DisplayMode;
 }
 
-const KNOWN_MODULES: Array<{ id: string; name: string; icon: typeof Download | typeof Tv }> = [
+const KNOWN_MODULES: Array<{ id: string; name: string; icon: typeof Download | typeof Tv | typeof Film | typeof Radio | typeof BookOpen | typeof Headphones }> = [
   { id: 'sabnzbd', name: 'SABnzbd', icon: Download },
   { id: 'sonarr', name: 'Sonarr', icon: Tv },
-  { id: 'radarr', name: 'Radarr', icon: Download },
-  { id: 'prowlarr', name: 'Prowlarr', icon: Download },
-  { id: 'readarr', name: 'Readarr', icon: Download },
-  { id: 'readarr-audiobooks', name: 'Readarr Audiobooks', icon: Download },
+  { id: 'radarr', name: 'Radarr', icon: Film },
+  { id: 'prowlarr', name: 'Prowlarr', icon: Radio },
+  { id: 'readarr', name: 'Readarr Ebook', icon: BookOpen },
+  { id: 'readarr-audiobooks', name: 'Readarr Audiobooks', icon: Headphones },
 ]
 
 const PROXY_ENDPOINTS: Record<string, string> = {

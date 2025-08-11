@@ -13,7 +13,7 @@ SidebarMenuItem,
 SidebarSeparator,
 SidebarHeader, // Ensure SidebarHeader is imported
 } from "@/components/ui/sidebar"
-import { LayoutDashboard, Tv, Film, Music, Search, Download, FileText, Settings, Palette, Server, BookOpen, ChevronDown, BarChart3 } from 'lucide-react' // FolderOpen removed, BarChart3 added
+import { LayoutDashboard, Tv, Film, Music, Search, Download, FileText, Settings, Palette, Server, BookOpen, ChevronDown, BarChart3, Radio, Headphones } from 'lucide-react' // FolderOpen removed, BarChart3 added
 import { ViewType } from "./dashboard"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { useState } from "react"
@@ -27,8 +27,12 @@ enabledModules: Record<string, boolean> // New prop
 }
 
 const modules = [
-{ id: 'sabnzbd' as ViewType, name: 'SABnzbd', icon: Download, description: 'Downloads' },
-{ id: 'sonarr' as ViewType, name: 'Sonarr', icon: Tv, description: 'TV Shows' },
+  { id: 'sabnzbd' as ViewType, name: 'SABnzbd', icon: Download, description: 'Downloads' },
+  { id: 'sonarr' as ViewType, name: 'Sonarr', icon: Tv, description: 'TV Shows' },
+  { id: 'radarr' as ViewType, name: 'Radarr', icon: Film, description: 'Movies' },
+  { id: 'prowlarr' as ViewType, name: 'Prowlarr', icon: Radio, description: 'Indexers' },
+  { id: 'readarr' as ViewType, name: 'Readarr Ebook', icon: BookOpen, description: 'Ebooks' },
+  { id: 'readarr-audiobooks' as ViewType, name: 'Readarr Audiobooks', icon: Headphones, description: 'Audiobooks' },
 ]
 
 const settings = [

@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- OpenAPI specification endpoints for all services (Sonarr, Radarr, Prowlarr, Readarr, Readarr_audiobooks)
+- Enhanced API testing with OpenAPI specification support
+- Random media selection feature for Sonarr, Radarr, Readarr, and Readarr_audiobooks
+- Mixed OpenAPI and command-based API testing approach
+- Dynamic parameter handling for Next.js routes
+- Enhanced API smoke test script with comprehensive validation
+- Automatic test analysis and issue reporting
 - System status monitoring functionality to Sonarr dashboard
 - System Status tab to the Sonarr dashboard interface
 - Health monitoring API methods to lib/api/sonarr.ts:
